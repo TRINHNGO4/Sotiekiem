@@ -469,7 +469,7 @@ tbody tr:hover td { background: #f8fafc; }
 <script>
 let books = [];
 let editId = null;
-let GS_URL = localStorage.getItem('gs_url') || '';
+const GS_URL = 'https://script.google.com/macros/s/AKfycbzgzspNpiW-n4jMDq1Zx1N7GBJMjUJzOcM0glSxcRNkeVUWTOhPB0qEhPkapaE3M5r3/exec';
 
 /* ── INIT ── */
 window.addEventListener('DOMContentLoaded', () => {
@@ -480,8 +480,8 @@ window.addEventListener('DOMContentLoaded', () => {
   autoEnd();
   loadLocal();
   renderAll();
-  if (GS_URL) { updatePill('on',''); doSync(true); }
-  else updatePill('off','');
+  updatePill('on','');
+  doSync(true);
   checkNotifBar();
   setTimeout(checkExpiring, 2500);
 });
@@ -560,7 +560,6 @@ function saveLocal()  { localStorage.setItem('stk', JSON.stringify(books)); }
 /* ── JSONP ENGINE ── */
 function gsCall(params) {
   return new Promise((resolve, reject) => {
-    if (!GS_URL) { reject(new Error('Chưa nhập URL')); return; }
     const cb = '__gs_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
     let el;
     const timer = setTimeout(()=>{ clean(); reject(new Error('Timeout 15 giây')); }, 15000);
@@ -577,7 +576,6 @@ function gsCall(params) {
 
 /* ── SYNC ── */
 async function doSync(silent=false) {
-  if (!GS_URL) { if (!silent) toast('Chưa cấu hình URL Google Sheets','e'); return; }
   updatePill('busy','Đang đồng bộ…'); setSyncOff(true);
   try {
     const d = await gsCall({action:'list'});
@@ -590,19 +588,16 @@ async function doSync(silent=false) {
 function setSyncOff(v) { const b=document.getElementById('btn-sync'); if(b) b.disabled=v; }
 
 async function gsAdd(book) {
-  if (!GS_URL) return {skipped:true};
   updatePill('busy','Đang lưu…');
   try { const r=await gsCall({action:'add',data:encodeURIComponent(JSON.stringify(book))}); updatePill('on','Đã lưu'); return r; }
   catch(e) { updatePill('off','Lỗi'); return {error:e.message}; }
 }
 async function gsUpdate(book) {
-  if (!GS_URL) return {skipped:true};
   updatePill('busy','Đang cập nhật…');
   try { const r=await gsCall({action:'update',data:encodeURIComponent(JSON.stringify(book))}); updatePill('on','Đã cập nhật'); return r; }
   catch(e) { updatePill('off','Lỗi'); return {error:e.message}; }
 }
 async function gsDelete(id) {
-  if (!GS_URL) return {skipped:true};
   updatePill('busy','Đang xóa…');
   try { const r=await gsCall({action:'delete',id:encodeURIComponent(id)}); updatePill('on','Đã xóa'); return r; }
   catch(e) { updatePill('off','Lỗi'); return {error:e.message}; }
@@ -821,9 +816,9 @@ function exportExcel() {
 function updatePill(state,label) {
   const p=document.getElementById('pill');
   const l=document.getElementById('pill-label');
-  p.style.display=GS_URL?'flex':'none';
+  p.style.display='flex';
   p.className='sync-pill '+state;
-  l.textContent=label||(state==='on'?'Đã kết nối':state==='busy'?'Đang đồng bộ…':'Chưa kết nối');
+  l.textContent=label||(state==='on'?'Đã kết nối':state==='busy'?'Đang đồng bộ…':'Lỗi kết nối');
 }
 function toast(msg,type='i') {
   const el=document.createElement('div');
