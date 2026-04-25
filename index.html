@@ -552,7 +552,7 @@ tbody tr.overdue:hover { background: #fad5d2 !important; }
 // ════════════════════════════════════════
 // ⚙️  CẤU HÌNH — chỉ sửa dòng này
 // ════════════════════════════════════════
-const API_URL = "https://script.google.com/macros/s/AKfycbyS9gNrHX4SyPxGfgBHsPQ097Q8QzkGzrDEpahOOd1kJTHL172EqxOWO7vmxx2WNT-uKg/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzPl-yXuuyuuwnFTzsGQ4KjRz8YHGJQr_r6x4KIGhUq2iXAHtEuPaRUQfwYkkKXUdvdLg/exec";
 
 // ════════════════════════════════════════
 // STATE
@@ -568,7 +568,15 @@ let openPanel   = null;
 // ════════════════════════════════════════
 const fmt  = n => (n == null || n === "") ? "—"
   : Number(n).toLocaleString("vi-VN") ;
-const fmtD = s => s ? String(s).substring(0, 10) : "—";
+const fmtD = s => {
+  if (!s) return "—";
+  const str = String(s).substring(0, 10);
+  const [y, m, d] = str.split("-");
+  if (!y || !m || !d) return str;
+  return `${d}/${m}/${y}`;
+};
+// Dùng cho input[type=date] — cần yyyy-MM-dd
+const isoD = s => s ? String(s).substring(0, 10) : "";
 const today = () => new Date().toISOString().substring(0, 10);
 const esc   = s => String(s || "").replace(/[&<>"']/g,
   c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -742,17 +750,14 @@ function rowActive(so, n) {
 
   return `<tr${rowCls ? ` class="${rowCls}"` : ""}>
     <td>${n}</td>
-    <td>
-      <strong>${esc(so.ten)}</strong>
-      ${so.thang ? `<br><small style="color:var(--gray)">${so.thang}</small>` : ""}
-    </td>
+    <td><strong>${esc(so.ten)}</strong></td>
     <td>${fmtD(so.ngayGui)}</td>
-    <td>${fmt(so.soTien)}</td>
+    <td><strong style="color:var(--blue)">${fmt(so.soTien)}</strong></td>
     <td>${so.laiSuat}%</td>
     <td>${so.kyHan} tháng</td>
     <td>${fmtD(so.ngayDaoHan)}</td>
     <td>${daysPill(so.ngayDaoHan)}</td>
-    <td>${fmt(so.laiDuKien)}</td>
+    <td><strong style="color:var(--green)">${fmt(so.laiDuKien)}</strong></td>
     <td>${badgeHtml(so.trangThai)}</td>
     <td>
       <div class="row-btns">
@@ -797,17 +802,14 @@ function rowClosed(so, n) {
 
   return `<tr style="opacity:.72">
     <td>${n}</td>
-    <td>
-      <strong>${esc(so.ten)}</strong>
-      ${so.thang ? `<br><small style="color:var(--gray)">${so.thang}</small>` : ""}
-    </td>
+    <td><strong>${esc(so.ten)}</strong></td>
     <td>${fmtD(so.ngayGui)}</td>
-    <td>${fmt(so.soTien)}</td>
+    <td><strong style="color:var(--blue)">${fmt(so.soTien)}</strong></td>
     <td>${so.laiSuat}%</td>
     <td>${so.kyHan} tháng</td>
     <td>${fmtD(so.ngayDaoHan)}</td>
     <td><strong>${fmtD(so.ngayTatToan)}</strong></td>
-    <td><strong>${tongNhan}</strong></td>
+    <td><strong style="color:var(--green)">${tongNhan}</strong></td>
     <td>
       <div class="row-btns">
         <button class="btn btn-gray    btn-sm" onclick="xemLichSu('${so.id}')">📜 Lịch sử</button>
@@ -884,7 +886,7 @@ function editSo(id) {
   editingId = id;
   document.getElementById("f_ten").value     = so.ten;
   document.getElementById("f_thang").value   = so.thang || "";
-  document.getElementById("f_ngayGui").value = fmtD(so.ngayGui);
+  document.getElementById("f_ngayGui").value = isoD(so.ngayGui);
   document.getElementById("f_soTien").value  = so.soTien;
   document.getElementById("f_laiSuat").value = so.laiSuat;
   document.getElementById("f_kyHan").value   = so.kyHan;
@@ -965,7 +967,7 @@ function openCal(id) {
   if (!so) return;
   document.getElementById("cal_id").value    = id;
   document.getElementById("cal_title").value = `📒 Đáo hạn: ${so.ten}`;
-  document.getElementById("cal_date").value  = fmtD(so.ngayDaoHan);
+  document.getElementById("cal_date").value  = isoD(so.ngayDaoHan);
   document.getElementById("cal_desc").value  =
     `Sổ ${so.ten} | Gốc: ${fmt(so.soTien)} | Lãi dự kiến: ${fmt(so.laiDuKien)}`;
   document.getElementById("mCal").classList.add("open");
@@ -1023,4 +1025,4 @@ document.querySelectorAll(".modal-bg").forEach(bg =>
 loadData();
 </script>
 </body>
-</html>
+</htmhtt
