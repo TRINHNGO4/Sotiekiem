@@ -1,1111 +1,1022 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💰 Sổ Tiết Kiệm</title>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sổ Tiết Kiệm</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --blue:#2563eb;--blue-d:#1d4ed8;--blue-pale:#eff6ff;--blue-mid:#dbeafe;
-  --green:#16a34a;--green-pale:#dcfce7;
-  --amber:#d97706;--amber-pale:#fef3c7;
-  --red:#dc2626;--red-pale:#fee2e2;
-  --purple:#7c3aed;
-  --bg:#f0f4ff;--surface:#fff;--border:#e5e7eb;--border-m:#d1d5db;
-  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
-  --sh:0 4px 16px rgba(37,99,235,.08),0 1px 4px rgba(0,0,0,.06);
-  --sh-lg:0 12px 40px rgba(37,99,235,.14),0 4px 12px rgba(0,0,0,.08);
-  --r:16px;--rm:10px;--rs:7px;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue:    #1a5276;
+  --blue-lt: #eaf0f9;
+  --blue-md: #d5e3f5;
+  --green:   #1e8449;
+  --red:     #c0392b;
+  --orange:  #d35400;
+  --gray:    #7f8c8d;
+  --bg:      #f0f3f7;
+  --white:   #ffffff;
+  --text:    #1c2833;
+  --border:  #dde3ea;
+  --shadow:  0 1px 5px rgba(0,0,0,.10);
 }
-body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
 
-/* TOPBAR */
-.topbar{background:linear-gradient(120deg,#1e3a8a,#2563eb 60%,#3b82f6);padding:0 20px;position:sticky;top:0;z-index:200;box-shadow:0 2px 24px rgba(37,99,235,.35)}
-.topbar-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
-.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;font-size:18px;white-space:nowrap}
-.brand-ic{width:38px;height:38px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.tbtn{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:var(--rs);padding:7px 15px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .18s}
-.tbtn:hover{background:rgba(255,255,255,.28)}
-.tbtn:disabled{opacity:.6;cursor:not-allowed}
-.topbar-actions{display:flex;gap:8px}
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
 
-/* LAYOUT */
-.page{max-width:1280px;margin:0 auto;padding:24px 16px 48px}
+/* ── HEADER ── */
+header {
+  background: var(--blue);
+  color: #fff;
+  padding: 13px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top: 0; z-index: 50;
+  box-shadow: 0 2px 8px rgba(0,0,0,.22);
+}
+header h1    { font-size: 18px; font-weight: 700; }
+header small { opacity: .7; font-size: 11px; }
 
-/* ALERT */
-.alert-box{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-radius:var(--rm);margin-bottom:20px;background:var(--amber-pale);border:1.5px solid #fbbf24}
-.alert-box p{font-size:13px;color:#78350f;margin:0}
+.wrap { max-width: 1160px; margin: 0 auto; padding: 18px 14px 60px; }
 
-/* STATS — 4 cards */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
-@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:440px){.stats{grid-template-columns:1fr 1fr}}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;position:relative;overflow:hidden;transition:box-shadow .18s}
-.stat:hover{box-shadow:var(--sh)}
-.stat::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:3px 3px 0 0}
-.stat.c-b::after{background:var(--blue)}.stat.c-g::after{background:var(--green)}
-.stat.c-a::after{background:var(--amber)}.stat.c-r::after{background:var(--red)}
-.stat-ic{font-size:26px;margin-bottom:6px}
-.stat-lbl{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
-.stat-val{font-size:18px;font-weight:800;color:var(--text);line-height:1.2}
-.stat-val.sm{font-size:14px}
-.stat-sub{font-size:11px;color:var(--text3);margin-top:3px}
+/* ── ALERT ── */
+#alertBox {
+  background: #fff8e1;
+  border-left: 4px solid #f39c12;
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  display: none;
+}
+#alertBox strong { color: #b7770d; }
+#alertBox ul     { margin-top: 6px; padding-left: 18px; line-height: 1.9; }
 
-/* TOOLBAR */
-.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.toolbar-l{display:flex;gap:8px;flex:1;flex-wrap:wrap;align-items:center}
-.toolbar-r{display:flex;gap:8px}
+/* ── SUMMARY CARDS ── */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 15px 17px;
+  box-shadow: var(--shadow);
+  border-left: 4px solid var(--blue);
+  position: relative;
+}
+.card.g  { border-left-color: var(--green); }
+.card.r  { border-left-color: var(--red); }
+.card label {
+  font-size: 11px; color: var(--gray);
+  display: block; margin-bottom: 5px;
+  text-transform: uppercase; letter-spacing: .4px; font-weight: 600;
+}
+.card .val { font-size: 22px; font-weight: 800; line-height: 1.1; }
+.card .sub { font-size: 11px; color: var(--gray); margin-top: 4px; }
 
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--rs);border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .18s;white-space:nowrap}
-.btn-primary{background:var(--blue);color:#fff}
-.btn-primary:hover{background:var(--blue-d);transform:translateY(-1px);box-shadow:0 4px 14px rgba(37,99,235,.35)}
-.btn-outline{background:var(--surface);color:var(--text2);border:1.5px solid var(--border)}
-.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
-.btn-ghost{background:transparent;color:var(--text2);padding:6px 9px;border-radius:var(--rs);border:1px solid transparent}
-.btn-ghost:hover{background:var(--border);color:var(--text)}
-.btn-danger{background:transparent;color:var(--red);padding:6px 9px;border-radius:var(--rs);border:1px solid rgba(220,38,38,.25)}
-.btn-danger:hover{background:var(--red-pale)}
-.btn-cal{background:transparent;color:var(--green);padding:6px 9px;border-radius:var(--rs);border:1px solid rgba(22,163,74,.25)}
-.btn-cal:hover{background:var(--green-pale)}
-.btn-tatToan{background:transparent;color:var(--purple);padding:6px 9px;border-radius:var(--rs);border:1px solid rgba(124,58,237,.25);font-size:12px}
-.btn-tatToan:hover{background:#f5f3ff}
-.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+/* ── TABS ── */
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.tab-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  background: #dce6f1;
+  color: #4a6a85;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .18s, color .18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-bottom: 3px solid transparent;
+  position: relative;
+}
+.tab-btn:hover { background: #ccdaed; }
 
-/* SEARCH */
-.searchbox{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rs);padding:0 12px;gap:6px;transition:border-color .18s}
-.searchbox:focus-within{border-color:var(--blue)}
-.searchbox input{border:none;outline:none;background:transparent;font-family:inherit;font-size:13px;color:var(--text);padding:8px 0;width:200px}
-.fselect{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--rs);padding:8px 12px;font-family:inherit;font-size:13px;color:var(--text);cursor:pointer;outline:none}
-.fselect:focus{border-color:var(--blue)}
+.tab-btn.active {
+  background: var(--white);
+  color: var(--blue);
+  border-bottom-color: var(--blue);
+}
+.tab-btn.active.tab-closed {
+  color: var(--red);
+  border-bottom-color: var(--red);
+}
 
-/* TABLE CARD */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
-.card-head{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.card-title{font-weight:700;font-size:15px}
-.card-count{font-size:12px;color:var(--text3);font-weight:500}
-.tbl-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse}
-thead th{background:#f8faff;padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);white-space:nowrap}
-tbody td{padding:11px 12px;border-bottom:1px solid #f1f5f9;font-size:13px;vertical-align:middle}
-tbody tr:last-child td{border-bottom:none}
-tbody tr:hover td{background:#f8fbff}
-.r{text-align:right;font-variant-numeric:tabular-nums}
-.acts{white-space:nowrap;display:flex;gap:4px;align-items:center}
+.tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #b0c4d8;
+  color: #fff;
+}
+.tab-btn.active .tab-count       { background: var(--blue); }
+.tab-btn.active.tab-closed .tab-count { background: var(--red); }
 
-/* MATURITY BOX — gốc + lãi về sổ */
-.maturity-box{display:inline-flex;flex-direction:column;gap:2px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:5px 9px}
-.maturity-box .mb-total{font-size:13px;font-weight:800;color:var(--green)}
-.maturity-box .mb-detail{font-size:10.5px;color:#166534;line-height:1.4}
+/* ── PANEL (bao bọc bảng) ── */
+.tab-panel {
+  background: var(--white);
+  border-radius: 0 0 8px 8px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.tab-panel-hd {
+  background: var(--blue-lt);
+  border-bottom: 1px solid var(--blue-md);
+  padding: 9px 16px;
+  font-size: 13px;
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+}
+.tab-panel-hd.hd-closed {
+  background: #fdf0ef;
+  border-bottom-color: #f5c6c6;
+  color: var(--red);
+}
 
-/* BADGES */
-.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
-.b-blue{background:var(--blue-mid);color:var(--blue)}
-.b-green{background:var(--green-pale);color:var(--green)}
-.b-gray{background:#f1f5f9;color:var(--text2)}
-.b-amber{background:var(--amber-pale);color:var(--amber)}
-.b-red{background:var(--red-pale);color:var(--red)}
+/* ── TOGGLE FORM BTN ── */
+#btnToggleForm {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 18px;
+  transition: background .15s;
+}
+#btnToggleForm:hover { background: #154360; }
+#btnToggleForm .arrow { font-size: 10px; transition: transform .25s; }
+#btnToggleForm.open .arrow { transform: rotate(180deg); }
 
-/* OVERLAY & MODAL */
-.overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(5px);z-index:500;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;visibility:hidden;transition:all .22s}
-.overlay.on{opacity:1;visibility:visible}
-.modal{background:var(--surface);border-radius:20px;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;box-shadow:var(--sh-lg);transform:translateY(14px) scale(.97);transition:transform .22s}
-.overlay.on .modal{transform:translateY(0) scale(1)}
-.modal-head{padding:20px 22px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--surface);border-radius:20px 20px 0 0;z-index:1}
-.modal-ttl{font-size:17px;font-weight:800}
-.modal-x{width:30px;height:30px;border-radius:50%;border:none;background:var(--border);cursor:pointer;font-size:16px;color:var(--text2);display:flex;align-items:center;justify-content:center;transition:background .15s}
-.modal-x:hover{background:var(--border-m)}
-.modal-body{padding:20px 22px}
-.modal-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+/* ── FORM PANEL ── */
+#formPanel {
+  display: none;
+  background: var(--white);
+  border-radius: 7px;
+  box-shadow: var(--shadow);
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+#formPanel.open { display: block; animation: slideDown .22s ease; }
+.form-hd {
+  background: var(--blue-lt);
+  border-bottom: 1px solid var(--blue-md);
+  padding: 10px 16px;
+  font-weight: 600;
+  color: var(--blue);
+  font-size: 14px;
+}
+.form-body { padding: 18px; }
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  gap: 13px;
+  margin-bottom: 14px;
+}
+.fg label {
+  display: block; font-size: 11px; color: var(--gray);
+  margin-bottom: 4px; text-transform: uppercase; letter-spacing: .3px;
+}
+.fg input, .fg select {
+  width: 100%; padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 5px; font-size: 14px;
+  outline: none; color: var(--text);
+  transition: border .18s, box-shadow .18s;
+}
+.fg input:focus, .fg select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(26,82,118,.12);
+}
 
-/* FORM */
-.fg-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.fg-grid .span2{grid-column:1/-1}
-@media(max-width:500px){.fg-grid{grid-template-columns:1fr}}
-.fg{display:flex;flex-direction:column;gap:5px}
-.fl{font-size:11.5px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px}
-.fl .req{color:var(--red)}
-.fc{border:1.5px solid var(--border);border-radius:var(--rs);padding:9px 12px;font-family:inherit;font-size:13px;color:var(--text);background:var(--surface);outline:none;transition:border-color .15s,box-shadow .15s;width:100%}
-.fc:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-textarea.fc{resize:vertical;min-height:68px}
-.fhint{font-size:11px;color:var(--text3)}
-.fsec{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.55px;padding-bottom:7px;border-bottom:1px solid var(--border);margin-bottom:2px}
+/* ── BUTTONS ── */
+.btn {
+  padding: 7px 14px; border: none; border-radius: 5px;
+  cursor: pointer; font-size: 13px; font-weight: 500;
+  transition: opacity .13s, transform .1s;
+  white-space: nowrap;
+}
+.btn:hover  { opacity: .88; }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--blue);   color: #fff; }
+.btn-danger  { background: var(--red);    color: #fff; }
+.btn-warning { background: var(--orange); color: #fff; }
+.btn-gray    { background: var(--gray);   color: #fff; }
+.btn-cal     { background: #1967d2;       color: #fff; }
+.btn-sm      { padding: 4px 10px; font-size: 12px; }
+.row-btns    { display: flex; gap: 5px; flex-wrap: wrap; }
 
-/* PREVIEW */
-.preview{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #bfdbfe;border-radius:var(--rm);padding:14px 16px;display:none}
-.preview.on{display:block}
-.preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.pv-item{text-align:center}
-.pv-lbl{font-size:10.5px;color:#1e40af;font-weight:600}
-.pv-val{font-size:15px;font-weight:800;color:#1d4ed8;margin-top:1px}
+/* ── TABLE ── */
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  background: var(--blue); color: #fff;
+  padding: 9px 10px; text-align: left;
+  white-space: nowrap; font-weight: 500;
+}
+.thead-closed th { background: #922b21; }
 
-/* TOGGLE */
-.toggle-row{display:flex;align-items:center;justify-content:space-between;background:#f8faff;border:1px solid var(--border);border-radius:var(--rs);padding:10px 14px}
-.tgl-lbl{font-size:13px;font-weight:500}
-.tgl-lbl small{display:block;font-size:11px;color:var(--text3);font-weight:400}
-.toggle{position:relative;width:40px;height:22px}
-.toggle input{display:none}
-.tgl-sl{position:absolute;inset:0;background:var(--border);border-radius:11px;cursor:pointer;transition:.18s}
-.tgl-sl::before{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;left:3px;top:3px;transition:.18s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-.toggle input:checked+.tgl-sl{background:var(--blue)}
-.toggle input:checked+.tgl-sl::before{transform:translateX(18px)}
+tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+tbody tr:nth-child(even) { background: #f8f9fa; }
+tbody tr:hover           { background: var(--blue-lt); }
+tbody td { padding: 8px 10px; white-space: nowrap; }
 
-/* TOASTS */
-#toasts{position:fixed;top:72px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px}
-.toast{display:flex;align-items:center;gap:10px;background:var(--surface);border-radius:10px;padding:11px 15px;max-width:340px;box-shadow:0 6px 24px rgba(0,0,0,.14);border-left:4px solid var(--blue);font-size:13px;font-weight:500;animation:tslide .28s ease}
-.toast.ok{border-color:var(--green)}.toast.err{border-color:var(--red)}.toast.warn{border-color:var(--amber)}
-@keyframes tslide{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
+/* highlight sắp đáo hạn */
+tbody tr.near-expire           { background: #fff9f0 !important; }
+tbody tr.near-expire:hover     { background: #fff3e0 !important; }
 
-/* EMPTY / LOADING */
-.empty{text-align:center;padding:56px 20px}
-.empty-ic{font-size:52px;margin-bottom:10px}
-.empty h3{font-size:16px;font-weight:700;margin-bottom:5px}
-.empty p{font-size:13px;color:var(--text2)}
-.spin-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;padding:48px}
-.spin{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:rot .65s linear infinite}
-@keyframes rot{to{transform:rotate(360deg)}}
-.soon{color:var(--amber);font-weight:600}
-.overdue{color:var(--red);font-weight:600}
-.days-chip{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
-.chip-red{background:var(--red-pale);color:var(--red)}
-.chip-amber{background:var(--amber-pale);color:var(--amber)}
-.chip-blue{background:var(--blue-mid);color:var(--blue)}
-.chip-green{background:var(--green-pale);color:var(--green)}
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-thumb{background:var(--border-m);border-radius:3px}
+/* ── BADGE ── */
+.badge {
+  display: inline-block; padding: 2px 9px;
+  border-radius: 12px; font-size: 11px; font-weight: 700;
+}
+.b-active  { background: #d5f5e3; color: #1e8449; }
+.b-expired { background: #fdebd0; color: #d35400; }
+.b-closed  { background: #e8e8e8; color: #555; }
+
+.days-pill {
+  display: inline-block; margin-left: 5px;
+  background: #fff3cd; color: #856404;
+  border-radius: 10px; padding: 1px 7px;
+  font-size: 10px; font-weight: 700;
+}
+
+/* ── EMPTY / LOADING ── */
+.state-msg { text-align: center; padding: 32px; color: var(--gray); font-size: 13px; }
+
+/* ── MODAL ── */
+.modal-bg {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.5); z-index: 200;
+  align-items: center; justify-content: center;
+}
+.modal-bg.open { display: flex; animation: fadeIn .2s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  background: var(--white); border-radius: 9px;
+  padding: 26px 24px 20px; width: 420px;
+  max-width: 96vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,.22);
+  animation: popIn .2s ease;
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.modal h3    { margin-bottom: 18px; color: var(--blue); font-size: 16px; }
+.modal .fg   { margin-bottom: 12px; }
+.modal-foot  { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+
+/* ── HISTORY ── */
+.history-list { max-height: 230px; overflow-y: auto; margin-top: 6px; }
+.h-item {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 8px 0; border-bottom: 1px dashed #eee; font-size: 12px; gap: 10px;
+}
+.h-item:last-child  { border-bottom: none; }
+.loai-gui           { color: var(--blue); font-weight: 700; }
+.loai-tatToan       { color: var(--red);  font-weight: 700; }
+.h-meta             { color: var(--gray); font-size: 11px; margin-top: 2px; }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed; bottom: 22px; right: 22px;
+  padding: 11px 20px; border-radius: 6px;
+  font-size: 13px; font-weight: 500; color: #fff;
+  background: #222; opacity: 0; transition: opacity .28s;
+  z-index: 999; max-width: 320px; pointer-events: none;
+}
+#toast.show    { opacity: 1; }
+#toast.success { background: var(--green); }
+#toast.error   { background: var(--red); }
+#toast.info    { background: #1967d2; }
+
+@media(max-width: 600px) {
+  .form-grid { grid-template-columns: 1fr 1fr; }
+  .summary   { grid-template-columns: 1fr 1fr; }
+  .tab-btn   { font-size: 13px; padding: 10px 10px; }
+}
 </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="topbar-inner">
-    <div class="brand"><div class="brand-ic">💰</div>Sổ Tiết Kiệm</div>
-    <div class="topbar-actions">
-      <button class="tbtn" onclick="openCalMod()">📅 Đặt lịch thủ công</button>
-      <button class="tbtn" id="syncBtn" onclick="doSync()">🔄 Đồng bộ</button>
-    </div>
-  </div>
+<header>
+  <h1>📒 Sổ Tiết Kiệm</h1>
+  <small id="lastUpd"></small>
 </header>
 
-<main class="page">
-  <!-- Banner cảnh báo đáo hạn gần -->
-  <div id="alertBanner" class="alert-box" style="display:none">
-    <span style="font-size:20px;flex-shrink:0">⏰</span>
-    <p id="alertText"></p>
+<div class="wrap">
+
+  <!-- Alert sắp đáo hạn -->
+  <div id="alertBox">
+    <strong>⏰ Sổ sắp đáo hạn trong 7 ngày:</strong>
+    <ul id="alertList"></ul>
   </div>
 
-  <!-- 4 STAT CARDS -->
-  <div class="stats">
-    <div class="stat c-b">
-      <div class="stat-ic">💳</div>
-      <div class="stat-lbl">Số dư hiện tại</div>
-      <div class="stat-val sm" id="sVon">—</div>
-      <div class="stat-sub">Gốc đang gửi + Lãi đã đáo hạn</div>
+  <!-- Summary cards: Tổng tiền trước -->
+  <div class="summary">
+    <div class="card g">
+      <label>Tổng tiền đang gửi</label>
+      <div class="val" id="sTien">—</div>
+      <div class="sub"  id="sTienSub"></div>
     </div>
-    <div class="stat c-b">
-      <div class="stat-ic">📂</div>
-      <div class="stat-lbl">Đang gửi</div>
-      <div class="stat-val" id="sDG">—</div>
-      <div class="stat-sub" id="sDG-sub"></div>
+    <div class="card">
+      <label>Sổ hoạt động</label>
+      <div class="val" id="sHD">0</div>
+      <div class="sub" id="sHDSub"></div>
     </div>
-    <div class="stat c-a">
-      <div class="stat-ic">⏰</div>
-      <div class="stat-lbl">Sắp đáo hạn (≤30 ngày)</div>
-      <div class="stat-val" id="sSDH">—</div>
-    </div>
-    <div class="stat c-g">
-      <div class="stat-ic">✅</div>
-      <div class="stat-lbl">Đã đáo hạn</div>
-      <div class="stat-val" id="sDDH">—</div>
+    <div class="card r">
+      <label>Sổ đã tất toán</label>
+      <div class="val" id="sTT">0</div>
+      <div class="sub" id="sTTSub"></div>
     </div>
   </div>
 
-  <!-- TOOLBAR -->
-  <div class="toolbar">
-    <div class="toolbar-l">
-      <button class="btn btn-primary" onclick="openAdd()">➕ Thêm sổ mới</button>
-      <div class="searchbox">
-        <span style="color:var(--text3);font-size:14px">🔍</span>
-        <input type="text" id="search" placeholder="Tìm tên sổ, ngân hàng..." oninput="doFilter()">
+  <!-- Nút thêm sổ -->
+  <button id="btnToggleForm" onclick="toggleForm()">
+    <span id="btnLabel">➕ Thêm sổ mới</span>
+    <span class="arrow">▼</span>
+  </button>
+
+  <!-- Form thêm/sửa -->
+  <div id="formPanel">
+    <div class="form-hd" id="formTitle">Thêm sổ mới</div>
+    <div class="form-body">
+      <div class="form-grid">
+        <div class="fg">
+          <label>Tên sổ *</label>
+          <input type="text"   id="f_ten"    placeholder="VD: Sổ Vietcombank A" />
+        </div>
+        <div class="fg">
+          <label>Tháng (YYYY-MM)</label>
+          <input type="month"  id="f_thang" />
+        </div>
+        <div class="fg">
+          <label>Ngày gửi *</label>
+          <input type="date"   id="f_ngayGui" />
+        </div>
+        <div class="fg">
+          <label>Số tiền (VNĐ) *</label>
+          <input type="number" id="f_soTien"  placeholder="VD: 50000000" min="0" step="1000" />
+        </div>
+        <div class="fg">
+          <label>Lãi suất (%/năm) *</label>
+          <input type="number" id="f_laiSuat" placeholder="VD: 5.5" step="0.01" min="0" />
+        </div>
+        <div class="fg">
+          <label>Kỳ hạn (tháng) *</label>
+          <input type="number" id="f_kyHan"   placeholder="VD: 6" min="1" max="120" />
+        </div>
       </div>
-      <select class="fselect" id="fStatus" onchange="doFilter()">
-        <option value="">Tất cả trạng thái</option>
-        <option value="Đang gửi" selected>🟢 Đang gửi</option>
-        <option value="Đã đáo hạn">🔵 Đã đáo hạn</option>
-        <option value="Tất toán">⚫ Tất toán</option>
-      </select>
-      <select class="fselect" id="fSort" onchange="doFilter()">
-        <option value="daohan_asc" selected>Đáo hạn sớm nhất</option>
-        <option value="">Sắp xếp mặc định</option>
-        <option value="daohan_desc">Đáo hạn muộn nhất</option>
-        <option value="tien_desc">Số tiền cao nhất</option>
-        <option value="tien_asc">Số tiền thấp nhất</option>
-        <option value="lai_desc">Lãi suất cao nhất</option>
-      </select>
-    </div>
-    <div class="toolbar-r">
-      <button class="btn btn-outline" onclick="load()">🔃 Làm mới</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="submitForm()">💾 Lưu</button>
+        <button class="btn btn-gray"    onclick="cancelForm()">✖ Hủy</button>
+      </div>
     </div>
   </div>
 
-  <!-- TABLE -->
-  <div class="card">
-    <div class="card-head">
-      <span class="card-title">📋 Danh sách sổ tiết kiệm</span>
-      <span class="card-count" id="tCount"></span>
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" id="tabBtnActive" onclick="switchTab('active')">
+      🟢 Sổ hoạt động
+      <span class="tab-count" id="tcActive">0</span>
+    </button>
+    <button class="tab-btn tab-closed" id="tabBtnClosed" onclick="switchTab('closed')">
+      ⬛ Sổ đã tất toán
+      <span class="tab-count" id="tcClosed">0</span>
+    </button>
+  </div>
+
+  <!-- Panel tab hoạt động -->
+  <div class="tab-panel" id="panelActive">
+    <div class="tab-panel-hd">
+      <span id="hdActiveLabel">📋 Sổ đang hoạt động — sắp đáo hạn trước</span>
+      <button class="btn btn-primary btn-sm" onclick="loadData()">🔄 Làm mới</button>
     </div>
-    <div class="tbl-wrap">
+    <div id="loadingActive" class="state-msg">Đang tải...</div>
+    <div id="emptyActive"   class="state-msg" style="display:none">Chưa có sổ hoạt động nào.</div>
+    <div class="tbl-wrap"   id="tblActive"    style="display:none">
       <table>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Tên sổ / Ghi chú</th>
-            <th>Ngân hàng</th>
-            <th class="r">Số tiền gửi</th>
-            <th class="r">Lãi suất</th>
-            <th>Kỳ hạn</th>
-            <th>Ngày gửi</th>
-            <th>Ngày đáo hạn</th>
-            <th class="r">Còn lại</th>
-            <th class="r">Nhận khi đáo hạn</th>
-            <th>Trạng thái</th>
-            <th>Thao tác</th>
+            <th>#</th><th>Tên sổ</th><th>Ngày gửi</th><th>Số tiền</th>
+            <th>Lãi suất</th><th>Kỳ hạn</th><th>Ngày đáo hạn</th>
+            <th>Lãi dự kiến</th><th>Trạng thái</th><th>Thao tác</th>
           </tr>
         </thead>
-        <tbody id="tbody">
-          <tr><td colspan="12"><div class="spin-wrap"><div class="spin"></div><p style="color:var(--text3);font-size:13px">Đang tải dữ liệu...</p></div></td></tr>
-        </tbody>
+        <tbody id="tbodyActive"></tbody>
       </table>
     </div>
   </div>
-</main>
 
-<div id="toasts"></div>
+  <!-- Panel tab tất toán (ẩn mặc định) -->
+  <div class="tab-panel" id="panelClosed" style="display:none">
+    <div class="tab-panel-hd hd-closed">
+      <span>📋 Sổ đã tất toán — tất toán gần nhất trước</span>
+      <button class="btn btn-gray btn-sm" onclick="loadData()">🔄 Làm mới</button>
+    </div>
+    <div id="loadingClosed" class="state-msg" style="display:none">Đang tải...</div>
+    <div id="emptyClosed"   class="state-msg" style="display:none">Chưa có sổ tất toán nào.</div>
+    <div class="tbl-wrap"   id="tblClosed"    style="display:none">
+      <table>
+        <thead class="thead-closed">
+          <tr>
+            <th>#</th><th>Tên sổ</th><th>Ngày gửi</th><th>Số tiền gốc</th>
+            <th>Lãi suất</th><th>Kỳ hạn</th><th>Ngày đáo hạn</th>
+            <th>Ngày tất toán</th><th>Lãi dự kiến</th><th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyClosed"></tbody>
+      </table>
+    </div>
+  </div>
 
-<!-- ═══════════════════════════════════════
-     MODAL: THÊM / SỬA
-══════════════════════════════════════════ -->
-<div class="overlay" id="moSaving">
+</div><!-- /wrap -->
+
+<!-- ══ MODAL: Tất toán ══ -->
+<div class="modal-bg" id="mTatToan">
   <div class="modal">
-    <div class="modal-head">
-      <div class="modal-ttl" id="moTitle">➕ Thêm sổ tiết kiệm mới</div>
-      <button class="modal-x" onclick="closeMo('moSaving')">✕</button>
+    <h3>🏦 Tất toán sổ</h3>
+    <input type="hidden" id="tt_id" />
+    <div class="fg">
+      <label>Tên sổ</label>
+      <input type="text" id="tt_ten" disabled style="background:#f5f5f5" />
     </div>
-    <div class="modal-body">
-      <div class="fg-grid">
-
-        <div class="fsec span2">Thông tin cơ bản</div>
-
-        <div class="fg span2">
-          <label class="fl">Tên sổ <span class="req">*</span></label>
-          <input class="fc" id="fTen" type="text" placeholder="VD: Sổ 6T VCB tháng 6/2025">
-        </div>
-        <div class="fg">
-          <label class="fl">Ngân hàng <span class="req">*</span></label>
-          <select class="fc" id="fNH">
-            <option value="">— Chọn ngân hàng —</option>
-            <option>Vietcombank</option><option>VietinBank</option><option>BIDV</option>
-            <option>Agribank</option><option>ACB</option><option>Techcombank</option>
-            <option>MB Bank</option><option>VPBank</option><option>TPBank</option>
-            <option>Sacombank</option><option>HDBank</option><option>SHB</option>
-            <option>SeABank</option><option>OCB</option><option>MSB</option>
-            <option>Eximbank</option><option>BacABank</option><option>Khác</option>
-          </select>
-        </div>
-        <div class="fg">
-          <label class="fl">Loại lãi <span class="req">*</span></label>
-          <select class="fc" id="fLoai" onchange="calcPreview()">
-            <option value="Cuối kỳ">Cuối kỳ (đơn giản)</option>
-            <option value="Kép (tháng)">Kép tháng (lãi kép)</option>
-            <option value="Trả trước">Trả lãi trước</option>
-          </select>
-        </div>
-
-        <div class="fsec span2">Thông tin tài chính</div>
-
-        <div class="fg">
-          <label class="fl">Số tiền gửi (₫) <span class="req">*</span></label>
-          <input class="fc" id="fSoTien" type="number" min="0" step="1000000" placeholder="50000000" oninput="calcPreview()">
-        </div>
-        <div class="fg">
-          <label class="fl">Lãi suất (%/năm) <span class="req">*</span></label>
-          <input class="fc" id="fLai" type="number" min="0" max="30" step="0.1" placeholder="5.5" oninput="calcPreview()">
-        </div>
-        <div class="fg">
-          <label class="fl">Kỳ hạn <span class="req">*</span></label>
-          <select class="fc" id="fKy" onchange="autoEndDate(); calcPreview()">
-            <option value="">— Chọn kỳ hạn —</option>
-            <option value="1">1 tháng</option><option value="2">2 tháng</option>
-            <option value="3">3 tháng</option><option value="6">6 tháng</option>
-            <option value="9">9 tháng</option><option value="12">12 tháng</option>
-            <option value="18">18 tháng</option><option value="24">24 tháng</option>
-            <option value="36">36 tháng</option>
-          </select>
-        </div>
-        <div class="fg">
-          <label class="fl">Ngày gửi <span class="req">*</span></label>
-          <input class="fc" id="fNgayGui" type="date" onchange="autoEndDate()">
-        </div>
-        <div class="fg span2">
-          <label class="fl">Ngày đáo hạn</label>
-          <input class="fc" id="fNgayDH" type="date">
-          <span class="fhint">Tự động tính từ ngày gửi + kỳ hạn. Có thể chỉnh tay.</span>
-        </div>
-
-        <!-- PREVIEW GỐC + LÃI + TỔNG -->
-        <div class="span2">
-          <div class="preview" id="preview">
-            <div class="preview-grid">
-              <div class="pv-item"><div class="pv-lbl">💰 Vốn gốc</div><div class="pv-val" id="pVon">—</div></div>
-              <div class="pv-item"><div class="pv-lbl">📈 Tiền lãi</div><div class="pv-val" id="pLai">—</div></div>
-              <div class="pv-item"><div class="pv-lbl">🏆 Gốc + lãi về sổ</div><div class="pv-val" id="pTong">—</div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="fsec span2">Nhắc nhở & Ghi chú</div>
-
-        <!-- TOGGLE TẠO LỊCH -->
-        <div class="span2">
-          <div class="toggle-row">
-            <div class="tgl-lbl">
-              📅 Tạo sự kiện Google Calendar khi lưu
-              <small>Nhắc 7 ngày · 1 ngày · 1 giờ trước ngày đáo hạn</small>
-            </div>
-            <label class="toggle"><input type="checkbox" id="fLich" checked><div class="tgl-sl"></div></label>
-          </div>
-        </div>
-
-        <div class="fg span2">
-          <label class="fl">Ghi chú</label>
-          <textarea class="fc" id="fNote" placeholder="Số sổ, số tài khoản, ghi chú thêm..."></textarea>
-        </div>
-
-        <!-- Trạng thái (chỉ hiện khi sửa) -->
-        <div class="fg span2" id="fStatusWrap" style="display:none">
-          <label class="fl">Trạng thái</label>
-          <select class="fc" id="fStatus2">
-            <option value="Đang gửi">🟢 Đang gửi</option>
-            <option value="Đã đáo hạn">🔵 Đã đáo hạn</option>
-            <option value="Tất toán">⚫ Tất toán</option>
-          </select>
-        </div>
-
-      </div>
+    <div class="fg">
+      <label>Số tiền gốc</label>
+      <input type="text" id="tt_goc" disabled style="background:#f5f5f5" />
+    </div>
+    <div class="fg">
+      <label>Lãi thực nhận (VNĐ)</label>
+      <input type="number" id="tt_lai" placeholder="Lãi ngân hàng thực trả" min="0" step="1000" />
+    </div>
+    <div class="fg">
+      <label>Ngày tất toán</label>
+      <input type="date" id="tt_ngay" />
+    </div>
+    <div class="fg">
+      <label>Ghi chú</label>
+      <input type="text" id="tt_ghichu" placeholder="Tùy chọn" />
     </div>
     <div class="modal-foot">
-      <button class="btn btn-outline" onclick="closeMo('moSaving')">Hủy</button>
-      <button class="btn btn-primary" id="submitBtn" onclick="submitSaving()">💾 Lưu sổ</button>
+      <button class="btn btn-danger" onclick="submitTatToan()">✔ Xác nhận tất toán</button>
+      <button class="btn btn-gray"   onclick="closeModal('mTatToan')">✖ Hủy</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     MODAL: ĐẶT LỊCH THỦ CÔNG
-══════════════════════════════════════════ -->
-<div class="overlay" id="moCal">
-  <div class="modal" style="max-width:460px">
-    <div class="modal-head">
-      <div class="modal-ttl">📅 Đặt lịch Google Calendar</div>
-      <button class="modal-x" onclick="closeMo('moCal')">✕</button>
+<!-- ══ MODAL: Google Calendar ══ -->
+<div class="modal-bg" id="mCal">
+  <div class="modal">
+    <h3>📅 Đặt lịch Google Calendar</h3>
+    <input type="hidden" id="cal_id" />
+    <div class="fg">
+      <label>Tiêu đề</label>
+      <input type="text" id="cal_title" />
     </div>
-    <div class="modal-body">
-      <div class="fg-grid">
-        <div class="fg span2">
-          <label class="fl">Tiêu đề <span class="req">*</span></label>
-          <input class="fc" id="cTitle" type="text" placeholder="VD: Tất toán sổ ACB">
-        </div>
-        <div class="fg">
-          <label class="fl">Ngày bắt đầu <span class="req">*</span></label>
-          <input class="fc" id="cStart" type="date">
-        </div>
-        <div class="fg">
-          <label class="fl">Ngày kết thúc</label>
-          <input class="fc" id="cEnd" type="date">
-        </div>
-        <div class="fg span2">
-          <label class="fl">Nhắc trước</label>
-          <select class="fc" id="cRemind">
-            <option value="">Không nhắc</option>
-            <option value="30">30 phút</option>
-            <option value="60">1 giờ</option>
-            <option value="1440">1 ngày</option>
-            <option value="10080">7 ngày</option>
-          </select>
-        </div>
-        <div class="fg span2">
-          <label class="fl">Mô tả</label>
-          <textarea class="fc" id="cDesc" placeholder="Nội dung..."></textarea>
-        </div>
-        <div class="span2">
-          <div class="toggle-row">
-            <div class="tgl-lbl">Sự kiện cả ngày (All-day)</div>
-            <label class="toggle"><input type="checkbox" id="cAllday" checked><div class="tgl-sl"></div></label>
-          </div>
-        </div>
-      </div>
+    <div class="fg">
+      <label>Ngày nhắc</label>
+      <input type="date" id="cal_date" />
     </div>
+    <div class="fg">
+      <label>Mô tả</label>
+      <input type="text" id="cal_desc" />
+    </div>
+    <p style="font-size:11px;color:var(--gray);margin-top:2px">
+      ⚠️ Cần Apps Script đã được cấp quyền Google Calendar.
+    </p>
     <div class="modal-foot">
-      <button class="btn btn-outline" onclick="closeMo('moCal')">Hủy</button>
-      <button class="btn btn-primary" onclick="submitCal()">📅 Tạo lịch</button>
+      <button class="btn btn-cal"  onclick="submitCalendar()">📅 Thêm vào Calendar</button>
+      <button class="btn btn-gray" onclick="closeModal('mCal')">✖ Hủy</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     MODAL: XÁC NHẬN XÓA
-══════════════════════════════════════════ -->
-<div class="overlay" id="moDel">
-  <div class="modal" style="max-width:380px">
-    <div class="modal-head">
-      <div class="modal-ttl">⚠️ Xác nhận xóa</div>
-      <button class="modal-x" onclick="closeMo('moDel')">✕</button>
-    </div>
-    <div class="modal-body" style="text-align:center;padding-top:8px">
-      <div style="font-size:46px;margin-bottom:10px">🗑️</div>
-      <div style="font-size:15px;font-weight:700;margin-bottom:6px" id="delMsg">Xóa sổ này?</div>
-      <div style="font-size:13px;color:var(--text2)">Sự kiện lịch liên kết (nếu có) cũng sẽ bị xóa.<br>Hành động này không thể hoàn tác.</div>
-    </div>
+<!-- ══ MODAL: Lịch sử ══ -->
+<div class="modal-bg" id="mLichSu">
+  <div class="modal" style="width:490px">
+    <h3 id="ls_title">📜 Lịch sử</h3>
+    <div class="history-list" id="ls_list"></div>
     <div class="modal-foot">
-      <button class="btn btn-outline" onclick="closeMo('moDel')">Hủy</button>
-      <button class="btn btn-danger" id="delBtn" onclick="doDelete()">🗑️ Xóa</button>
+      <button class="btn btn-gray" onclick="closeModal('mLichSu')">Đóng</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     MODAL: XÁC NHẬN TẤT TOÁN
-══════════════════════════════════════════ -->
-<div class="overlay" id="moTatToan">
-  <div class="modal" style="max-width:400px">
-    <div class="modal-head">
-      <div class="modal-ttl">💵 Xác nhận tất toán</div>
-      <button class="modal-x" onclick="closeMo('moTatToan')">✕</button>
-    </div>
-    <div class="modal-body" style="text-align:center;padding-top:8px">
-      <div style="font-size:46px;margin-bottom:10px">💰</div>
-      <div style="font-size:15px;font-weight:700;margin-bottom:8px" id="tatToanMsg">Tất toán sổ này?</div>
-      <div id="tatToanDetail" style="background:#f5f3ff;border:1px solid #ddd6fe;border-radius:10px;padding:12px 16px;margin-bottom:0;text-align:left;font-size:13px;display:none">
-      </div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn btn-outline" onclick="closeMo('moTatToan')">Hủy</button>
-      <button class="btn btn-primary" id="tatToanBtn" onclick="doTatToan()" style="background:var(--purple);border-color:var(--purple)">💵 Xác nhận tất toán</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════
-     MODAL: CHI TIẾT SỔ
-══════════════════════════════════════════ -->
-<div class="overlay" id="moDetail">
-  <div class="modal" style="max-width:500px">
-    <div class="modal-head">
-      <div class="modal-ttl">📄 Chi tiết sổ tiết kiệm</div>
-      <button class="modal-x" onclick="closeMo('moDetail')">✕</button>
-    </div>
-    <div class="modal-body" id="detailBody"></div>
-    <div class="modal-foot">
-      <button class="btn btn-outline" onclick="closeMo('moDetail')">Đóng</button>
-      <button class="btn btn-cal" id="detailCalBtn">📅 Đặt lịch</button>
-      <button class="btn btn-primary" id="detailEditBtn">✏️ Chỉnh sửa</button>
-    </div>
-  </div>
-</div>
+<div id="toast"></div>
 
 <script>
 // ══════════════════════════════════════
-//  CẤU HÌNH — Dán URL Apps Script vào đây
+// ⚙️  CẤU HÌNH
 // ══════════════════════════════════════
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxESl4LXwwRmZ2CD0iDYTcFdfLIHwE1SY3cMVJYWD_L4ng-9bhAXrPX4d4ZL8TlCYMt/exec';
-
-let allData = [], editId = null, delId = null;
+const API_URL = "https://script.google.com/macros/s/AKfycbystK4s1ZMwMtxmgGaw4SY8ad7B6CzxOih7D4fZ7dVMFZ19kkyU9xVn2nSMNpuWSt3PcQ/exec";
 
 // ══════════════════════════════════════
-//  INIT
+// STATE
 // ══════════════════════════════════════
-document.addEventListener('DOMContentLoaded', () => {
-  setToday();
-  load();
-});
+let allData   = [];
+let editingId = null;
+let formOpen  = false;
+let activeTab = "active"; // "active" | "closed"  — mặc định sổ hoạt động
 
-function setToday() {
-  const t = new Date().toISOString().split('T')[0];
-  ['fNgayGui','cStart'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = t;
-  });
+// ══════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════
+const fmt  = n => (n == null || n === "") ? "—"
+  : Number(n).toLocaleString("vi-VN") + " ₫";
+const fmtD = s => s ? String(s).substring(0, 10) : "—";
+const today = () => new Date().toISOString().substring(0, 10);
+const esc   = s => String(s || "").replace(/[&<>"']/g,
+  c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function daysUntil(dateStr) {
+  const d = new Date(dateStr), t = new Date();
+  t.setHours(0,0,0,0);
+  return Math.round((d - t) / 864e5);
+}
+
+function showToast(msg, type = "success") {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.className = "show " + type;
+  clearTimeout(t._t);
+  t._t = setTimeout(() => { t.className = ""; }, 3200);
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove("open");
 }
 
 // ══════════════════════════════════════
-//  API — dùng GET cho tất cả (tránh CORS)
-//  GAS encode payload vào query string
+// API
 // ══════════════════════════════════════
-async function api(action, payload = null) {
+async function api(action, body = {}) {
+  const url = `${API_URL}?action=${action}&body=${encodeURIComponent(JSON.stringify(body))}`;
+  const res  = await fetch(url);
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  const json = await res.json();
+  if (!json.ok) throw new Error(json.error || "Lỗi không xác định");
+  return json;
+}
+
+// ══════════════════════════════════════
+// LOAD DATA
+// ══════════════════════════════════════
+async function loadData() {
+  // Hiện loading ở tab đang active
+  setLoading(true);
   try {
-    let url = SCRIPT_URL + '?action=' + encodeURIComponent(action);
-
-    // Gắn payload vào query param "body" để GAS đọc qua doGet
-    if (payload) {
-      url += '&body=' + encodeURIComponent(JSON.stringify(payload));
-    }
-
-    const res = await fetch(url, {
-      method: 'GET',
-      redirect: 'follow'
-    });
-
-    const text = await res.text();
-    try {
-      return JSON.parse(text);
-    } catch {
-      // Nếu GAS trả về JSONP hoặc HTML (lỗi redirect), cố parse
-      const m = text.match(/\{[\s\S]*\}/);
-      if (m) return JSON.parse(m[0]);
-      return { success: false, error: 'Phản hồi không hợp lệ từ server. Kiểm tra URL và quyền Deploy.' };
-    }
-  } catch (e) {
-    return { success: false, error: e.message };
+    const res = await api("getAll");
+    allData = res.data || [];
+    renderSummary(allData);
+    renderCurrentTab();
+    document.getElementById("lastUpd").textContent =
+      "Cập nhật " + new Date().toLocaleTimeString("vi-VN");
+    loadAlert();
+  } catch (err) {
+    setLoading(false, "⚠️ Lỗi: " + err.message);
+    showToast("Lỗi tải dữ liệu: " + err.message, "error");
   }
 }
 
-// ══════════════════════════════════════
-//  LOAD DỮ LIỆU
-// ══════════════════════════════════════
-async function load() {
-  showLoading();
-  const [r1, r2] = await Promise.all([api('getAll'), api('getStats')]);
+function setLoading(on, msg = "Đang tải...") {
+  const id = activeTab === "active" ? "loadingActive" : "loadingClosed";
+  document.getElementById(id).style.display = on ? "" : "none";
+  if (on) document.getElementById(id).textContent = msg;
+}
 
-  if (r1.success) {
-    allData = r1.data || [];
-    doFilter();
-    checkAlert(allData);
+// ══════════════════════════════════════
+// SUMMARY
+// ══════════════════════════════════════
+function renderSummary(data) {
+  const active = data.filter(d => d.trangThai !== "Tất toán");
+  const closed = data.filter(d => d.trangThai === "Tất toán");
+  const daoHan = active.filter(d => d.trangThai === "Đáo hạn").length;
+  const tongTien = active.reduce((s, d) => s + Number(d.soTien || 0), 0);
+
+  document.getElementById("sTien").textContent    = fmt(tongTien);
+  document.getElementById("sTienSub").textContent =
+    daoHan > 0 ? `⚠️ ${daoHan} sổ đã đáo hạn` : `${active.length} sổ đang gửi`;
+
+  document.getElementById("sHD").textContent      = active.length;
+  document.getElementById("sHDSub").textContent   =
+    daoHan > 0 ? `${daoHan} sổ cần xử lý` : "Đang hoạt động tốt";
+
+  document.getElementById("sTT").textContent      = closed.length;
+  document.getElementById("sTTSub").textContent   =
+    closed.length > 0
+      ? `Gần nhất: ${fmtD(closed[0]?.ngayTatToan)}`
+      : "Chưa có sổ tất toán";
+
+  // Cập nhật số đếm trên tab
+  document.getElementById("tcActive").textContent = active.length;
+  document.getElementById("tcClosed").textContent = closed.length;
+}
+
+// ══════════════════════════════════════
+// TAB SWITCHING
+// ══════════════════════════════════════
+function switchTab(tab) {
+  activeTab = tab;
+
+  // Cập nhật tab buttons
+  document.getElementById("tabBtnActive").classList.toggle("active", tab === "active");
+  document.getElementById("tabBtnClosed").classList.toggle("active", tab === "closed");
+
+  // Cập nhật panels
+  document.getElementById("panelActive").style.display = tab === "active" ? "" : "none";
+  document.getElementById("panelClosed").style.display = tab === "closed" ? "" : "none";
+
+  renderCurrentTab();
+}
+
+function renderCurrentTab() {
+  if (activeTab === "active") {
+    renderActiveTab();
   } else {
-    toast('Lỗi tải dữ liệu: ' + (r1.error || 'Không rõ lỗi'), 'err');
-    showEmpty();
+    renderClosedTab();
+  }
+}
+
+// ══════════════════════════════════════
+// RENDER: Tab sổ hoạt động
+// Sắp xếp: ngày đáo hạn gần nhất lên đầu (sắp tất toán trước)
+// ══════════════════════════════════════
+function renderActiveTab() {
+  const loading = document.getElementById("loadingActive");
+  const empty   = document.getElementById("emptyActive");
+  const tbl     = document.getElementById("tblActive");
+
+  loading.style.display = "none";
+
+  const data = allData
+    .filter(d => d.trangThai !== "Tất toán")
+    .sort((a, b) => new Date(a.ngayDaoHan) - new Date(b.ngayDaoHan));
+
+  if (!data.length) {
+    empty.style.display = ""; tbl.style.display = "none"; return;
+  }
+  empty.style.display = "none"; tbl.style.display = "";
+
+  // Cập nhật label header
+  const sap = data.filter(d => daysUntil(d.ngayDaoHan) <= 30 && daysUntil(d.ngayDaoHan) >= 0).length;
+  document.getElementById("hdActiveLabel").textContent =
+    `📋 Sổ đang hoạt động (${data.length})` +
+    (sap > 0 ? ` — ⚠️ ${sap} sổ đáo hạn trong 30 ngày` : " — sắp đáo hạn trước");
+
+  document.getElementById("tbodyActive").innerHTML =
+    data.map((so, i) => rowActive(so, i + 1)).join("");
+}
+
+function rowActive(so, n) {
+  const days = daysUntil(so.ngayDaoHan);
+  let daysTag = "";
+  if (days >= 0 && days <= 30) {
+    daysTag = `<span class="days-pill">còn ${days} ngày</span>`;
+  } else if (days < 0) {
+    daysTag = `<span class="days-pill" style="background:#fde8e8;color:#c0392b">quá ${Math.abs(days)} ngày</span>`;
   }
 
-  if (r2.success) renderStats(r2.stats);
+  const nearExpire = days >= 0 && days <= 7;
+  const cls = nearExpire ? ' class="near-expire"' : "";
+
+  return `<tr${cls}>
+    <td>${n}</td>
+    <td>
+      <strong>${esc(so.ten)}</strong>
+      ${so.thang ? `<br><small style="color:var(--gray)">${so.thang}</small>` : ""}
+    </td>
+    <td>${fmtD(so.ngayGui)}</td>
+    <td>${fmt(so.soTien)}</td>
+    <td>${so.laiSuat}%</td>
+    <td>${so.kyHan} tháng</td>
+    <td>${fmtD(so.ngayDaoHan)}${daysTag}</td>
+    <td>${fmt(so.laiDuKien)}</td>
+    <td>${badgeHtml(so.trangThai)}</td>
+    <td>
+      <div class="row-btns">
+        <button class="btn btn-primary btn-sm" onclick="editSo('${so.id}')">✏️</button>
+        <button class="btn btn-danger  btn-sm" onclick="openTatToan('${so.id}')">🏦 Tất toán</button>
+        <button class="btn btn-cal     btn-sm" onclick="openCal('${so.id}')">📅</button>
+        <button class="btn btn-gray    btn-sm" onclick="xemLichSu('${so.id}')">📜</button>
+        <button class="btn btn-warning btn-sm" onclick="deleteSo('${so.id}','${esc(so.ten)}')">🗑️</button>
+      </div>
+    </td>
+  </tr>`;
 }
 
 // ══════════════════════════════════════
-//  STATS
+// RENDER: Tab sổ tất toán
+// Sắp xếp: ngày tất toán mới nhất lên đầu
 // ══════════════════════════════════════
-function renderStats(s) {
-  document.getElementById('sVon').textContent  = fmoney(s.tongVon);
-  document.getElementById('sDG').textContent   = (s.dangGui || 0) + ' sổ';
-  document.getElementById('sDG-sub').textContent = s.tongSo ? 'Tổng ' + s.tongSo + ' sổ' : '';
-  document.getElementById('sSDH').textContent  = (s.sapDaoHan || 0) + ' sổ';
-  document.getElementById('sDDH').textContent  = (s.daDaoHan  || 0) + ' sổ';
+function renderClosedTab() {
+  const loading = document.getElementById("loadingClosed");
+  const empty   = document.getElementById("emptyClosed");
+  const tbl     = document.getElementById("tblClosed");
+
+  loading.style.display = "none";
+
+  const data = allData
+    .filter(d => d.trangThai === "Tất toán")
+    .sort((a, b) => new Date(b.ngayTatToan || 0) - new Date(a.ngayTatToan || 0));
+
+  if (!data.length) {
+    empty.style.display = ""; tbl.style.display = "none"; return;
+  }
+  empty.style.display = "none"; tbl.style.display = "";
+
+  document.getElementById("tbodyClosed").innerHTML =
+    data.map((so, i) => rowClosed(so, i + 1)).join("");
+}
+
+function rowClosed(so, n) {
+  // Lấy thông tin tất toán từ lịch sử
+  const ls = so.lichSu || [];
+  const ttTx = [...ls].reverse().find(t => t.loai === "tatToan");
+  const tongNhan = ttTx ? fmt(ttTx.tongNhan) : "—";
+
+  return `<tr style="opacity:.75">
+    <td>${n}</td>
+    <td>
+      <strong>${esc(so.ten)}</strong>
+      ${so.thang ? `<br><small style="color:var(--gray)">${so.thang}</small>` : ""}
+    </td>
+    <td>${fmtD(so.ngayGui)}</td>
+    <td>${fmt(so.soTien)}</td>
+    <td>${so.laiSuat}%</td>
+    <td>${so.kyHan} tháng</td>
+    <td>${fmtD(so.ngayDaoHan)}</td>
+    <td><strong>${fmtD(so.ngayTatToan)}</strong></td>
+    <td>${tongNhan}</td>
+    <td>
+      <div class="row-btns">
+        <button class="btn btn-gray btn-sm" onclick="xemLichSu('${so.id}')">📜 Lịch sử</button>
+        <button class="btn btn-warning btn-sm" onclick="deleteSo('${so.id}','${esc(so.ten)}')">🗑️</button>
+      </div>
+    </td>
+  </tr>`;
 }
 
 // ══════════════════════════════════════
-//  ALERT BANNER
+// BADGE
 // ══════════════════════════════════════
-function checkAlert(data) {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const soon = data.filter(r => {
-    if (r.trangThai !== 'Đang gửi') return false;
-    const diff = Math.ceil((new Date(r.ngayDaoHan) - today) / 86400000);
-    return diff >= 0 && diff <= 7;
-  });
-  const el = document.getElementById('alertBanner');
-  if (soon.length > 0) {
-    document.getElementById('alertText').textContent =
-      `⚠️ ${soon.length} sổ sắp đáo hạn trong 7 ngày tới: ` +
-      soon.map(r => `"${r.tenSo}" (${fdate(r.ngayDaoHan)})`).join(' — ');
-    el.style.display = 'flex';
+function badgeHtml(tt) {
+  if (tt === "Hoạt động") return `<span class="badge b-active">Hoạt động</span>`;
+  if (tt === "Đáo hạn")   return `<span class="badge b-expired">Đáo hạn</span>`;
+  return `<span class="badge b-closed">Tất toán</span>`;
+}
+
+// ══════════════════════════════════════
+// ALERT sắp đáo hạn
+// ══════════════════════════════════════
+async function loadAlert() {
+  try {
+    const res  = await api("sapDaoHan");
+    const list = res.data || [];
+    const box  = document.getElementById("alertBox");
+    const ul   = document.getElementById("alertList");
+    if (!list.length) { box.style.display = "none"; return; }
+    ul.innerHTML = list.map(s =>
+      `<li><strong>${esc(s.ten)}</strong> — đáo hạn <strong>${fmtD(s.ngayDaoHan)}</strong>
+       (còn ${s.soNgayConLai} ngày) — ${fmt(s.soTien)}</li>`
+    ).join("");
+    box.style.display = "";
+  } catch(_) {}
+}
+
+// ══════════════════════════════════════
+// TOGGLE FORM
+// ══════════════════════════════════════
+function toggleForm() {
+  formOpen = !formOpen;
+  const panel = document.getElementById("formPanel");
+  const btn   = document.getElementById("btnToggleForm");
+  if (formOpen) {
+    panel.classList.add("open");
+    btn.classList.add("open");
+    if (!editingId) resetFields();
   } else {
-    el.style.display = 'none';
+    panel.classList.remove("open");
+    btn.classList.remove("open");
+    cancelForm();
   }
 }
+function openFormPanel() { if (!formOpen) toggleForm(); }
 
 // ══════════════════════════════════════
-//  FILTER & SORT
+// FORM
 // ══════════════════════════════════════
-function doFilter() {
-  const q  = document.getElementById('search').value.toLowerCase();
-  const st = document.getElementById('fStatus').value;
-  const so = document.getElementById('fSort').value;
-
-  let data = allData.filter(r =>
-    (!q  || r.tenSo.toLowerCase().includes(q) ||
-             r.nganHang.toLowerCase().includes(q) ||
-             (r.ghiChu||'').toLowerCase().includes(q)) &&
-    (!st || r.trangThai === st)
+function resetFields() {
+  ["f_ten","f_thang","f_ngayGui","f_soTien","f_laiSuat","f_kyHan"].forEach(
+    id => { document.getElementById(id).value = ""; }
   );
-
-  if (so === 'daohan_asc')  data.sort((a,b) => new Date(a.ngayDaoHan) - new Date(b.ngayDaoHan));
-  if (so === 'daohan_desc') data.sort((a,b) => new Date(b.ngayDaoHan) - new Date(a.ngayDaoHan));
-  if (so === 'tien_desc')   data.sort((a,b) => b.soTienGui - a.soTienGui);
-  if (so === 'tien_asc')    data.sort((a,b) => a.soTienGui - b.soTienGui);
-  if (so === 'lai_desc')    data.sort((a,b) => b.laiSuat - a.laiSuat);
-
-  renderTable(data);
+  document.getElementById("f_ngayGui").value = today();
+  document.getElementById("f_thang").value   = today().substring(0, 7);
 }
 
-// ══════════════════════════════════════
-//  RENDER TABLE
-// ══════════════════════════════════════
-function renderTable(data) {
-  const tbody = document.getElementById('tbody');
-  document.getElementById('tCount').textContent = data.length + ' sổ';
-  if (!data.length) { showEmpty(); return; }
+function cancelForm() {
+  editingId = null;
+  document.getElementById("formTitle").textContent = "Thêm sổ mới";
+  document.getElementById("btnLabel").textContent  = "➕ Thêm sổ mới";
+  resetFields();
+  formOpen = false;
+  document.getElementById("formPanel").classList.remove("open");
+  document.getElementById("btnToggleForm").classList.remove("open");
+}
 
-  const today = new Date(); today.setHours(0,0,0,0);
+function editSo(id) {
+  const so = allData.find(s => s.id == id);
+  if (!so) return;
+  editingId = id;
+  document.getElementById("f_ten").value     = so.ten;
+  document.getElementById("f_thang").value   = so.thang || "";
+  document.getElementById("f_ngayGui").value = fmtD(so.ngayGui);
+  document.getElementById("f_soTien").value  = so.soTien;
+  document.getElementById("f_laiSuat").value = so.laiSuat;
+  document.getElementById("f_kyHan").value   = so.kyHan;
+  document.getElementById("formTitle").textContent = "✏️ Sửa sổ: " + so.ten;
+  document.getElementById("btnLabel").textContent  = "✏️ Đang sửa sổ";
+  openFormPanel();
+  document.getElementById("formPanel").scrollIntoView({ behavior: "smooth" });
+}
 
-  tbody.innerHTML = data.map((r, i) => {
-    const diff = r.ngayDaoHan ? Math.ceil((new Date(r.ngayDaoHan) - today) / 86400000) : null;
+async function submitForm() {
+  const ten     = document.getElementById("f_ten").value.trim();
+  const thang   = document.getElementById("f_thang").value;
+  const ngayGui = document.getElementById("f_ngayGui").value;
+  const soTien  = document.getElementById("f_soTien").value;
+  const laiSuat = document.getElementById("f_laiSuat").value;
+  const kyHan   = document.getElementById("f_kyHan").value;
 
-    // Màu/nhãn cột ngày đáo hạn
-    let dateCls = '', dateNote = '';
-    if (r.trangThai === 'Đang gửi' && diff !== null) {
-      if (diff < 0)        { dateCls='overdue'; dateNote=`<br><small>(Quá ${Math.abs(diff)} ngày)</small>`; }
-      else if (diff === 0) { dateCls='overdue'; dateNote='<br><small style="color:var(--red)">(Hôm nay!)</small>'; }
+  if (!ten || !ngayGui || !soTien || !laiSuat || !kyHan) {
+    showToast("Vui lòng điền đủ thông tin (*)", "error"); return;
+  }
+  try {
+    const body = { ten, thang, ngayGui, soTien, laiSuat, kyHan };
+    if (editingId) {
+      await api("update", { id: editingId, ...body });
+      showToast("✅ Đã cập nhật sổ");
+    } else {
+      await api("add", body);
+      showToast("✅ Đã thêm sổ mới");
     }
-
-    // Cột "Số ngày còn lại" — chip màu
-    let daysHtml = '<span style="color:var(--text3);font-size:12px">—</span>';
-    if (r.trangThai === 'Tất toán') {
-      daysHtml = `<span class="badge b-gray">Đã tất toán</span>`;
-    } else if (r.trangThai === 'Đã đáo hạn') {
-      daysHtml = `<span class="badge b-green">Đã đáo hạn</span>`;
-    } else if (diff !== null) {
-      if (diff < 0) {
-        daysHtml = `<span class="days-chip chip-red">Quá ${Math.abs(diff)} ngày</span>`;
-      } else if (diff === 0) {
-        daysHtml = `<span class="days-chip chip-red">Hôm nay!</span>`;
-      } else if (diff <= 7) {
-        daysHtml = `<span class="days-chip chip-red">${diff} ngày</span>`;
-      } else if (diff <= 30) {
-        daysHtml = `<span class="days-chip chip-amber">${diff} ngày</span>`;
-      } else if (diff <= 90) {
-        daysHtml = `<span class="days-chip chip-blue">${diff} ngày</span>`;
-      } else {
-        daysHtml = `<span class="days-chip chip-green">${diff} ngày</span>`;
-      }
-    }
-
-    // Cột "Nhận khi đáo hạn" — gốc + lãi
-    const von  = Number(r.soTienGui) || 0;
-    const lai  = Number(r.tienLai)   || 0;
-    const tong = Number(r.tongNhan)  || von;
-    const maturityHtml = `
-      <div class="maturity-box">
-        <div class="mb-total">${fmoney(tong)}</div>
-        <div class="mb-detail">Gốc: ${fmoney(von)}<br>Lãi: <span style="color:var(--green);font-weight:700">${fmoney(lai)}</span></div>
-      </div>`;
-
-    const rid = esc(r.id);
-    const rname = esc(r.tenSo);
-
-    return `<tr>
-      <td style="color:var(--text3);font-size:12px">${i+1}</td>
-      <td>
-        <a href="#" style="font-weight:700;color:var(--blue);text-decoration:none"
-           onclick="openDetail('${rid}');return false">${rname}</a>
-        ${r.ghiChu ? `<br><small style="color:var(--text3)">${esc(r.ghiChu)}</small>` : ''}
-      </td>
-      <td>${esc(r.nganHang)}</td>
-      <td class="r"><strong>${fmoney(r.soTienGui)}</strong></td>
-      <td class="r">${r.laiSuat}%<br><small style="color:var(--text3)">${r.loaiLai||''}</small></td>
-      <td><span class="badge b-gray">${r.kyHan}T</span></td>
-      <td style="white-space:nowrap;font-size:12px">${fdate(r.ngayGui)}</td>
-      <td class="${dateCls}" style="white-space:nowrap;font-size:12px">${fdate(r.ngayDaoHan)}${dateNote}</td>
-      <td class="r">${daysHtml}</td>
-      <td class="r">${maturityHtml}</td>
-      <td>${badge(r.trangThai)}</td>
-      <td>
-        <div class="acts">
-          <button class="btn btn-ghost"  title="Chi tiết" onclick="openDetail('${rid}')">👁</button>
-          <button class="btn btn-ghost"  title="Sửa"      onclick="openEdit('${rid}')">✏️</button>
-          <button class="btn btn-cal"    title="Đặt lịch" onclick="quickCal('${rid}')">📅</button>
-          ${r.trangThai !== 'Tất toán' ? `<button class="btn btn-tatToan" title="Tất toán" onclick="openTatToan('${rid}','${rname}')">💵 Tất toán</button>` : ''}
-          <button class="btn btn-danger" title="Xóa"      onclick="openDel('${rid}','${rname}')">🗑️</button>
-        </div>
-      </td>
-    </tr>`;
-  }).join('');
-}
-
-// ══════════════════════════════════════
-//  BADGE
-// ══════════════════════════════════════
-function badge(s) {
-  const m = {
-    'Đang gửi' :'b-blue',
-    'Đã đáo hạn':'b-green',
-    'Tất toán'  :'b-gray'
-  };
-  return `<span class="badge ${m[s]||'b-gray'}">${s||'—'}</span>`;
-}
-
-function showLoading() {
-  document.getElementById('tbody').innerHTML =
-    `<tr><td colspan="12"><div class="spin-wrap"><div class="spin"></div><p style="color:var(--text3);font-size:13px">Đang tải...</p></div></td></tr>`;
-}
-function showEmpty() {
-  document.getElementById('tbody').innerHTML =
-    `<tr><td colspan="12"><div class="empty"><div class="empty-ic">💰</div><h3>Chưa có sổ tiết kiệm</h3><p>Nhấn "Thêm sổ mới" để bắt đầu.</p></div></td></tr>`;
-  document.getElementById('tCount').textContent = '0 sổ';
-}
-
-// ══════════════════════════════════════
-//  CHI TIẾT SỔ
-// ══════════════════════════════════════
-function openDetail(id) {
-  const r = allData.find(x => x.id === id);
-  if (!r) return;
-
-  const today = new Date(); today.setHours(0,0,0,0);
-  const diff  = r.ngayDaoHan ? Math.ceil((new Date(r.ngayDaoHan) - today) / 86400000) : null;
-
-  let cntHtml = '';
-  if (r.trangThai === 'Đang gửi' && diff !== null) {
-    if (diff < 0)        cntHtml = `<span style="color:var(--red);font-weight:700"> — Quá hạn ${Math.abs(diff)} ngày</span>`;
-    else if (diff === 0) cntHtml = `<span style="color:var(--red);font-weight:700"> — Đáo hạn hôm nay!</span>`;
-    else                 cntHtml = `<span style="color:var(--amber);font-weight:600"> — Còn ${diff} ngày</span>`;
-  }
-
-  const von  = Number(r.soTienGui) || 0;
-  const lai  = Number(r.tienLai)   || 0;
-  const tong = Number(r.tongNhan)  || von;
-
-  const rows = [
-    ['Tên sổ',        `<strong>${esc(r.tenSo)}</strong>`],
-    ['Ngân hàng',     `<strong>${esc(r.nganHang)}</strong>`],
-    ['Loại lãi',      r.loaiLai || '—'],
-    ['Số tiền gửi',   `<span style="color:var(--blue);font-weight:800;font-size:15px">${fmoney(von)}</span>`],
-    ['Lãi suất',      `${r.laiSuat}%/năm`],
-    ['Kỳ hạn',        `${r.kyHan} tháng`],
-    ['Ngày gửi',      fdate(r.ngayGui)],
-    ['Ngày đáo hạn',  `${fdate(r.ngayDaoHan)}${cntHtml}`],
-    ['─── Khi đáo hạn nhận về ───', ''],
-    ['Vốn gốc',       `<span style="color:var(--blue);font-weight:700">${fmoney(von)}</span>`],
-    ['Tiền lãi',      `<span style="color:var(--green);font-weight:700">${fmoney(lai)}</span>`],
-    ['Tổng gốc + lãi',`<span style="color:var(--blue);font-weight:900;font-size:16px">${fmoney(tong)}</span>`],
-    ['Trạng thái',    badge(r.trangThai)],
-    ['Ngày tạo',      r.ngayTao || '—'],
-  ];
-  if (r.ghiChu) rows.push(['Ghi chú', esc(r.ghiChu)]);
-
-  document.getElementById('detailBody').innerHTML =
-    `<table style="width:100%;border-collapse:collapse;font-size:13px">
-      ${rows.map((rv, i) => {
-        if (!rv[1]) return `<tr><td colspan="2" style="padding:10px 0 4px;font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;border-top:1px solid var(--border)">${rv[0]}</td></tr>`;
-        return `<tr style="${i%2?'background:#f8faff':''}">
-          <td style="padding:9px ${i%2?'8px':'0'};color:var(--text2);width:44%;vertical-align:top">${rv[0]}</td>
-          <td style="padding:9px ${i%2?'8px':'0'}">${rv[1]}</td>
-        </tr>`;
-      }).join('')}
-    </table>`;
-
-  document.getElementById('detailEditBtn').onclick = () => { closeMo('moDetail'); openEdit(id); };
-  document.getElementById('detailCalBtn').onclick  = () => { closeMo('moDetail'); quickCal(id); };
-  openMo('moDetail');
-}
-
-// ══════════════════════════════════════
-//  THÊM / SỬA SỔ
-// ══════════════════════════════════════
-function openAdd() {
-  editId = null;
-  document.getElementById('moTitle').textContent   = '➕ Thêm sổ tiết kiệm mới';
-  document.getElementById('submitBtn').textContent  = '💾 Lưu sổ';
-  document.getElementById('fStatusWrap').style.display = 'none';
-  clearForm();
-  setToday();
-  openMo('moSaving');
-}
-
-function openEdit(id) {
-  const r = allData.find(x => x.id === id);
-  if (!r) return;
-  editId = id;
-  document.getElementById('moTitle').textContent   = '✏️ Chỉnh sửa sổ tiết kiệm';
-  document.getElementById('submitBtn').textContent  = '💾 Cập nhật';
-  document.getElementById('fStatusWrap').style.display = 'flex';
-
-  document.getElementById('fTen').value      = r.tenSo      || '';
-  document.getElementById('fNH').value       = r.nganHang   || '';
-  document.getElementById('fSoTien').value   = r.soTienGui  || '';
-  document.getElementById('fLai').value      = r.laiSuat    || '';
-  document.getElementById('fKy').value       = r.kyHan      || '';
-  document.getElementById('fLoai').value     = r.loaiLai    || 'Cuối kỳ';
-  document.getElementById('fNgayGui').value  = r.ngayGui    || '';
-  document.getElementById('fNgayDH').value   = r.ngayDaoHan || '';
-  document.getElementById('fNote').value     = r.ghiChu     || '';
-  document.getElementById('fStatus2').value  = r.trangThai  || 'Đang gửi';
-  document.getElementById('fLich').checked   = false;
-
-  calcPreview();
-  openMo('moSaving');
-}
-
-function clearForm() {
-  ['fTen','fNH','fSoTien','fLai','fKy','fNgayGui','fNgayDH','fNote'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.value = '';
-  });
-  document.getElementById('fLoai').value = 'Cuối kỳ';
-  document.getElementById('fLich').checked = true;
-  document.getElementById('preview').classList.remove('on');
-}
-
-function autoEndDate() {
-  const ng = document.getElementById('fNgayGui').value;
-  const ky = document.getElementById('fKy').value;
-  if (!ng || !ky) return;
-  const d = new Date(ng); d.setMonth(d.getMonth() + +ky);
-  document.getElementById('fNgayDH').value = d.toISOString().split('T')[0];
-  calcPreview();
-}
-
-function calcPreview() {
-  const st  = +document.getElementById('fSoTien').value;
-  const ls  = +document.getElementById('fLai').value;
-  const ky  = +document.getElementById('fKy').value;
-  const loi = document.getElementById('fLoai').value;
-  const prev = document.getElementById('preview');
-  if (!st || !ls || !ky) { prev.classList.remove('on'); return; }
-
-  let tl, tn;
-  if (loi === 'Kép (tháng)') {
-    tn = st * Math.pow(1 + ls/100/12, ky);
-    tl = tn - st;
-  } else {
-    tl = st * (ls/100) * (ky/12);
-    tn = st + tl;
-  }
-
-  document.getElementById('pVon').textContent  = fmoney(Math.round(st));
-  document.getElementById('pLai').textContent  = fmoney(Math.round(tl));
-  document.getElementById('pTong').textContent = fmoney(Math.round(tn));
-  prev.classList.add('on');
-}
-
-// ══════════════════════════════════════
-//  LƯU SỔ
-// ══════════════════════════════════════
-async function submitSaving() {
-  const data = {
-    tenSo:      document.getElementById('fTen').value.trim(),
-    nganHang:   document.getElementById('fNH').value,
-    soTienGui:  document.getElementById('fSoTien').value,
-    laiSuat:    document.getElementById('fLai').value,
-    kyHan:      document.getElementById('fKy').value,
-    loaiLai:    document.getElementById('fLoai').value,
-    ngayGui:    document.getElementById('fNgayGui').value,
-    ngayDaoHan: document.getElementById('fNgayDH').value,
-    ghiChu:     document.getElementById('fNote').value.trim(),
-    taoLich:    document.getElementById('fLich').checked,
-    trangThai:  document.getElementById('fStatus2').value || 'Đang gửi'
-  };
-
-  if (!data.tenSo)     return toast('Vui lòng nhập tên sổ!', 'warn');
-  if (!data.nganHang)  return toast('Vui lòng chọn ngân hàng!', 'warn');
-  if (!data.soTienGui) return toast('Vui lòng nhập số tiền!', 'warn');
-  if (!data.laiSuat)   return toast('Vui lòng nhập lãi suất!', 'warn');
-  if (!data.kyHan)     return toast('Vui lòng chọn kỳ hạn!', 'warn');
-  if (!data.ngayGui)   return toast('Vui lòng chọn ngày gửi!', 'warn');
-
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = '⏳ Đang lưu...';
-
-  const r = editId
-    ? await api('update', { data: { ...data, id: editId } })
-    : await api('add',    { data });
-
-  btn.disabled = false;
-  btn.textContent = editId ? '💾 Cập nhật' : '💾 Lưu sổ';
-
-  if (r.success) {
-    toast(r.message || 'Thành công!', 'ok');
-    closeMo('moSaving');
-    load();
-  } else {
-    toast('Lỗi: ' + (r.error || 'Không thể kết nối tới server'), 'err');
+    cancelForm();
+    loadData();
+  } catch (err) {
+    showToast("❌ " + err.message, "error");
   }
 }
 
 // ══════════════════════════════════════
-//  XÓA SỔ
+// XÓA
 // ══════════════════════════════════════
-function openDel(id, name) {
-  delId = id;
-  document.getElementById('delMsg').textContent = `Xóa sổ "${name}"?`;
-  openMo('moDel');
-}
-
-async function doDelete() {
-  if (!delId) return;
-  const btn = document.getElementById('delBtn');
-  btn.disabled = true; btn.textContent = '⏳ Đang xóa...';
-  const r = await api('delete', { id: delId });
-  btn.disabled = false; btn.textContent = '🗑️ Xóa';
-  if (r.success) {
-    toast(r.message || 'Đã xóa!', 'ok');
-    closeMo('moDel');
-    delId = null;
-    load();
-  } else {
-    toast('Lỗi: ' + (r.error || 'Không xóa được'), 'err');
+async function deleteSo(id, ten) {
+  if (!confirm(`Xóa sổ "${ten}"?\nThao tác này KHÔNG thể hoàn tác!`)) return;
+  try {
+    await api("delete", { id });
+    showToast("✅ Đã xóa sổ");
+    loadData();
+  } catch (err) {
+    showToast("❌ " + err.message, "error");
   }
 }
 
 // ══════════════════════════════════════
-//  TẤT TOÁN SỔ
+// TẤT TOÁN
 // ══════════════════════════════════════
-let tatToanId = null;
-
-function openTatToan(id, name) {
-  tatToanId = id;
-  const r = allData.find(x => x.id === id);
-  document.getElementById('tatToanMsg').textContent = `Tất toán sổ "${name}"?`;
-
-  const detailEl = document.getElementById('tatToanDetail');
-  if (r) {
-    const von    = Number(r.soTienGui) || 0;
-    const lai    = Number(r.tienLai)   || 0;
-    const tong   = Number(r.tongNhan)  || (von + lai);
-    detailEl.innerHTML =
-      `<div style="display:flex;flex-direction:column;gap:6px">
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Vốn gốc:</span><strong>${fmoney(von)}</strong></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Tiền lãi:</span><strong style="color:var(--green)">${fmoney(lai)}</strong></div>
-        <div style="border-top:1px solid #ddd6fe;margin:2px 0"></div>
-        <div style="display:flex;justify-content:space-between"><span style="color:var(--purple);font-weight:700">Tổng nhận về:</span><strong style="color:var(--purple);font-size:15px">${fmoney(tong)}</strong></div>
-      </div>`;
-    detailEl.style.display = 'block';
-  } else {
-    detailEl.style.display = 'none';
-  }
-  openMo('moTatToan');
+function openTatToan(id) {
+  const so = allData.find(s => s.id == id);
+  if (!so) return;
+  document.getElementById("tt_id").value     = id;
+  document.getElementById("tt_ten").value    = so.ten;
+  document.getElementById("tt_goc").value    = fmt(so.soTien);
+  document.getElementById("tt_lai").value    = so.laiDuKien || "";
+  document.getElementById("tt_ngay").value   = today();
+  document.getElementById("tt_ghichu").value = "";
+  document.getElementById("mTatToan").classList.add("open");
 }
 
-async function doTatToan() {
-  if (!tatToanId) return;
-  const btn = document.getElementById('tatToanBtn');
-  btn.disabled = true; btn.textContent = '⏳ Đang xử lý...';
-  const r = await api('tatToan', { id: tatToanId });
-  btn.disabled = false; btn.textContent = '💵 Xác nhận tất toán';
-  if (r.success) {
-    toast(r.message || 'Tất toán thành công!', 'ok');
-    closeMo('moTatToan');
-    tatToanId = null;
-    load();
-  } else {
-    toast('Lỗi: ' + (r.error || 'Không thể tất toán'), 'err');
+async function submitTatToan() {
+  const id     = document.getElementById("tt_id").value;
+  const lai    = document.getElementById("tt_lai").value;
+  const ngay   = document.getElementById("tt_ngay").value;
+  const ghiChu = document.getElementById("tt_ghichu").value;
+  if (!ngay) { showToast("Vui lòng chọn ngày tất toán", "error"); return; }
+  try {
+    await api("tatToan", { id, laiThucNhan: lai, ngayTatToan: ngay, ghiChu });
+    showToast("✅ Tất toán thành công — sổ đã đóng");
+    closeModal("mTatToan");
+    loadData();
+  } catch (err) {
+    showToast("❌ " + err.message, "error");
   }
 }
 
 // ══════════════════════════════════════
-//  ĐỒNG BỘ TRẠNG THÁI
+// GOOGLE CALENDAR
 // ══════════════════════════════════════
-async function doSync() {
-  const btn = document.getElementById('syncBtn');
-  btn.disabled = true; btn.textContent = '⏳ Đang đồng bộ...';
-  toast('Đang đồng bộ trạng thái...', 'warn');
-  const r = await api('sync');
-  btn.disabled = false; btn.textContent = '🔄 Đồng bộ';
-  toast(r.success ? (r.message || 'Xong!') : 'Lỗi: ' + r.error, r.success ? 'ok' : 'err');
-  if (r.success) load();
+function openCal(id) {
+  const so = allData.find(s => s.id == id);
+  if (!so) return;
+  document.getElementById("cal_id").value    = id;
+  document.getElementById("cal_title").value = `📒 Đáo hạn: ${so.ten}`;
+  document.getElementById("cal_date").value  = fmtD(so.ngayDaoHan);
+  document.getElementById("cal_desc").value  =
+    `Sổ ${so.ten} | Gốc: ${fmt(so.soTien)} | Lãi dự kiến: ${fmt(so.laiDuKien)}`;
+  document.getElementById("mCal").classList.add("open");
 }
 
-// ══════════════════════════════════════
-//  ĐẶT LỊCH NHANH (từng sổ)
-// ══════════════════════════════════════
-function quickCal(id) {
-  const r = allData.find(x => x.id === id);
-  if (!r) return;
-  // Mở modal đặt lịch với thông tin điền sẵn
-  document.getElementById('cTitle').value  = `💰 Đáo hạn: ${r.tenSo} — ${r.nganHang}`;
-  document.getElementById('cStart').value  = r.ngayDaoHan || '';
-  document.getElementById('cEnd').value    = r.ngayDaoHan || '';
-  document.getElementById('cRemind').value = '10080'; // 7 ngày
-  document.getElementById('cDesc').value   =
-    `Tên sổ: ${r.tenSo}\nNgân hàng: ${r.nganHang}\n` +
-    `Vốn gốc: ${fmoney(r.soTienGui)}\nLãi suất: ${r.laiSuat}%/năm\n` +
-    `Kỳ hạn: ${r.kyHan} tháng\nTiền lãi: ${fmoney(r.tienLai)}\n` +
-    `Tổng nhận (gốc+lãi): ${fmoney(r.tongNhan)}\n\n` +
-    `⚠️ Nhớ đến ngân hàng tất toán hoặc tái tục!`;
-  document.getElementById('cAllday').checked = true;
-  openMo('moCal');
-}
-
-// ══════════════════════════════════════
-//  ĐẶT LỊCH THỦ CÔNG
-// ══════════════════════════════════════
-function openCalMod() { openMo('moCal'); }
-
-async function submitCal() {
-  const data = {
-    title:       document.getElementById('cTitle').value.trim(),
-    startDate:   document.getElementById('cStart').value,
-    endDate:     document.getElementById('cEnd').value,
-    description: document.getElementById('cDesc').value.trim(),
-    reminder:    document.getElementById('cRemind').value,
-    isAllDay:    document.getElementById('cAllday').checked
-  };
-  if (!data.title)     return toast('Vui lòng nhập tiêu đề!', 'warn');
-  if (!data.startDate) return toast('Vui lòng chọn ngày!', 'warn');
-  toast('Đang tạo sự kiện lịch...', 'warn');
-  const r = await api('calendar', { data });
-  if (r.success) {
-    toast(r.message || 'Đã tạo lịch thành công!', 'ok');
-    closeMo('moCal');
-    document.getElementById('cTitle').value = '';
-    document.getElementById('cDesc').value  = '';
-  } else {
-    toast('Lỗi tạo lịch: ' + (r.error || 'Không rõ lỗi'), 'err');
+async function submitCalendar() {
+  const title = document.getElementById("cal_title").value.trim();
+  const date  = document.getElementById("cal_date").value;
+  const desc  = document.getElementById("cal_desc").value;
+  if (!title || !date) { showToast("Vui lòng điền tiêu đề và ngày", "error"); return; }
+  try {
+    await api("addCalendar", { title, date, description: desc });
+    showToast("📅 Đã thêm vào Google Calendar!", "info");
+    closeModal("mCal");
+  } catch (err) {
+    showToast("❌ " + err.message, "error");
   }
 }
 
 // ══════════════════════════════════════
-//  MODAL HELPERS
+// LỊCH SỬ
 // ══════════════════════════════════════
-function openMo(id)  { document.getElementById(id).classList.add('on'); }
-function closeMo(id) { document.getElementById(id).classList.remove('on'); }
-
-document.querySelectorAll('.overlay').forEach(el => {
-  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('on'); });
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape')
-    document.querySelectorAll('.overlay.on').forEach(el => el.classList.remove('on'));
-});
-
-// ══════════════════════════════════════
-//  TOAST
-// ══════════════════════════════════════
-function toast(msg, type = 'ok') {
-  const icons = { ok:'✅', err:'❌', warn:'⚠️' };
-  const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  el.innerHTML = `<span style="font-size:14px">${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
-  document.getElementById('toasts').appendChild(el);
-  setTimeout(() => el.remove(), 4500);
+function xemLichSu(id) {
+  const so = allData.find(s => s.id == id);
+  if (!so) return;
+  const list = (so.lichSu || []).slice().reverse();
+  document.getElementById("ls_title").textContent = `📜 Lịch sử — ${so.ten}`;
+  document.getElementById("ls_list").innerHTML = !list.length
+    ? `<p style="color:var(--gray);padding:10px 0">Chưa có giao dịch nào</p>`
+    : list.map(tx => {
+        const loaiLabel = tx.loai === "gui"
+          ? `<span class="loai-gui">▶ Gửi tiền</span>`
+          : `<span class="loai-tatToan">■ Tất toán</span>`;
+        const detail = tx.loai === "tatToan"
+          ? `Gốc: ${fmt(tx.soTienGoc)}<br>Lãi: ${fmt(tx.laiThucNhan)}<br><strong>Tổng nhận: ${fmt(tx.tongNhan)}</strong>`
+          : fmt(tx.soTien);
+        return `<div class="h-item">
+          <div>
+            ${loaiLabel}
+            <div class="h-meta">${fmtD(tx.ngay)}${tx.ghiChu ? " — " + esc(tx.ghiChu) : ""}</div>
+          </div>
+          <div style="text-align:right;font-size:12px">${detail}</div>
+        </div>`;
+      }).join("");
+  document.getElementById("mLichSu").classList.add("open");
 }
 
 // ══════════════════════════════════════
-//  HELPERS
+// CLOSE MODAL KHI CLICK RA NGOÀI
 // ══════════════════════════════════════
-function fmoney(n) {
-  if (n == null || n === '' || isNaN(n)) return '—';
-  return Number(n).toLocaleString('vi-VN') + ' ₫';
-}
-function fdate(s) {
-  if (!s) return '—';
-  const d = new Date(s);
-  if (isNaN(d)) return s;
-  return d.toLocaleDateString('vi-VN', { day:'2-digit', month:'2-digit', year:'numeric' });
-}
-function esc(s) {
-  return String(s||'')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+document.querySelectorAll(".modal-bg").forEach(bg =>
+  bg.addEventListener("click", e => { if (e.target === bg) bg.classList.remove("open"); })
+);
+
+// ══════════════════════════════════════
+// KHỞI ĐỘNG — luôn mở tab Hoạt động trước
+// ══════════════════════════════════════
+activeTab = "active";
+loadData();
 </script>
 </body>
 </html>
