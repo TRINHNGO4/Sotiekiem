@@ -562,7 +562,7 @@ let activeTab = "active"; // "active" | "closed"  — mặc định sổ hoạt 
 // UTILS
 // ══════════════════════════════════════
 const fmt  = n => (n == null || n === "") ? "—"
-  : Number(n).toLocaleString("vi-VN") + " ₫";
+  : Number(n).toLocaleString("vi-VN") ;
 const fmtD = s => s ? String(s).substring(0, 10) : "—";
 const today = () => new Date().toISOString().substring(0, 10);
 const esc   = s => String(s || "").replace(/[&<>"']/g,
